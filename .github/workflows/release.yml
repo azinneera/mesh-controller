@@ -25,12 +25,12 @@ jobs:
       env:
         GO111MODULE: on
       run: |
+        echo ${GITHUB_REF}
         export PATH=$PATH:$(go env GOPATH)/bin
         export GOPATH=$(go env GOPATH)
         make build.controller
         
     - name: Deploy
       run: |
-        echo ${GITHUB_REF}
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_IMAGE_TAG=${GITHUB_REF} make docker-push.controller artifacts 
