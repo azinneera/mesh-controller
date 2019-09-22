@@ -1,5 +1,5 @@
 name: Go
-on: release
+on: [release]
   types: [created]
 jobs:
 
