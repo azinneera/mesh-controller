@@ -1,6 +1,6 @@
 name: Go
-on: [release]
-  types: [created, published]
+on: release
+  types: [created]
 jobs:
 
   build:
