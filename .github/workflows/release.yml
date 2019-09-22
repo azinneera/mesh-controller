@@ -1,0 +1,34 @@
+name: Go
+on: [release]
+  types: [created, published]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-18.04
+    steps:
+
+    - name: Set up Go 1.12
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.12
+      id: go
+      
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Get Go tools
+      run: make tools
+
+    - name: Build
+      env:
+        GO111MODULE: on
+      run: |
+        export PATH=$PATH:$(go env GOPATH)/bin
+        export GOPATH=$(go env GOPATH)
+        make build.controller
+        
+    - name: Deploy
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_IMAGE_TAG=${GITHUB_REF} make docker-push.controller artifacts 
