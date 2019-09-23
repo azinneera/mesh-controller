@@ -25,9 +25,10 @@ jobs:
       env:
         GO111MODULE: on
       run: |
-        echo ${GITHUB_REF}
         export PATH=$PATH:$(go env GOPATH)/bin
         export GOPATH=$(go env GOPATH)
+        echo $PATH
+        echo ${GITHUB_REF}
         make build.controller
         
     - name: Deploy
