@@ -33,4 +33,4 @@ jobs:
       run: |
         RELEASE_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_IMAGE_TAG=$RELEASE_VERSION make docker-push.controller artifacts 
+        DOCKER_IMAGE_TAG=$RELEASE_VERSION make docker.controller artifacts 
